@@ -6,23 +6,27 @@
 </head>
 <body>
   <h2>你好 👋</h2>
-  <p>点击下面按钮开启通知</p>
-
   <button id="btn">开启通知</button>
 
   <script>
     document.getElementById('btn').onclick = async () => {
-      if ('serviceWorker' in navigator && 'Notification' in window) {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          await navigator.serviceWorker.register('sw.js');
-          alert('已开启通知 ✅');
-        } else {
-          alert('你拒绝了通知 😢');
-        }
+      console.log('按钮被点击');
+
+      if (!('Notification' in window)) {
+        alert('浏览器不支持通知');
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+      console.log('权限结果:', permission);
+
+      if (permission === 'granted') {
+        await navigator.serviceWorker.register('sw.js');
+        alert('通知已开启 ✅');
+      } else {
+        alert('通知被拒绝 ❌');
       }
     };
   </script>
 </body>
 </html>
-

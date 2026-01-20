@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>小问候</title>
+</head>
+<body>
+  <h2>你好 👋</h2>
+  <p>这个页面会请求一次通知权限。</p>
+
+  <script>
+    if ('serviceWorker' in navigator && 'Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          navigator.serviceWorker.register('sw.js');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

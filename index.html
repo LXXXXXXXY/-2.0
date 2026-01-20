@@ -6,16 +6,23 @@
 </head>
 <body>
   <h2>你好 👋</h2>
-  <p>这个页面会请求一次通知权限。</p>
+  <p>点击下面按钮开启通知</p>
+
+  <button id="btn">开启通知</button>
 
   <script>
-    if ('serviceWorker' in navigator && 'Notification' in window) {
-      Notification.requestPermission().then(permission => {
+    document.getElementById('btn').onclick = async () => {
+      if ('serviceWorker' in navigator && 'Notification' in window) {
+        const permission = await Notification.requestPermission();
         if (permission === 'granted') {
-          navigator.serviceWorker.register('sw.js');
+          await navigator.serviceWorker.register('sw.js');
+          alert('已开启通知 ✅');
+        } else {
+          alert('你拒绝了通知 😢');
         }
-      });
-    }
+      }
+    };
   </script>
 </body>
 </html>
+
